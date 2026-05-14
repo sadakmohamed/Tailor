@@ -102,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </form>
     <?php else: ?>
     <div class="text-center">
-        <a href="<?= BASE_URL ?>/index.php"
+        <a href="<?= BASE_URL ?>/"
            class="inline-block bg-amber-500 hover:bg-amber-400 text-white font-semibold px-6 py-3 rounded-lg transition-colors">
             Go to Login →
         </a>

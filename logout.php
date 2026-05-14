@@ -11,5 +11,5 @@ require_once __DIR__ . '/config/db.php';
 session_unset();
 session_destroy();
 
-header('Location: ' . BASE_URL . '/index.php?msg=logged_out');
+header('Location: ' . BASE_URL . '/?msg=logged_out');
 exit;

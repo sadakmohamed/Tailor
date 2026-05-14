@@ -20,7 +20,7 @@ if (isset($_SESSION['user'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ' . BASE_URL . '/index.php');
+    header('Location: ' . BASE_URL . '/');
     exit;
 }
 
@@ -29,7 +29,7 @@ $password = trim($_POST['password'] ?? '');
 
 if (!$email || !$password) {
     $_SESSION['login_error'] = 'Please enter your email and password.';
-    header('Location: ' . BASE_URL . '/index.php');
+    header('Location: ' . BASE_URL . '/');
     exit;
 }
 
@@ -47,13 +47,13 @@ $user = $stmt->fetch();
 
 if (!$user || !password_verify($password, $user['password'])) {
     $_SESSION['login_error'] = 'Invalid email or password.';
-    header('Location: ' . BASE_URL . '/index.php');
+    header('Location: ' . BASE_URL . '/');
     exit;
 }
 
 if ($user['status'] !== 'active') {
     $_SESSION['login_error'] = 'Your account is inactive. Contact your administrator.';
-    header('Location: ' . BASE_URL . '/index.php');
+    header('Location: ' . BASE_URL . '/');
     exit;
 }
 

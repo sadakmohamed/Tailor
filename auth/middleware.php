@@ -17,7 +17,7 @@ if (session_status() === PHP_SESSION_NONE) {
 function requireAuth(array $roles = []): void
 {
     if (!isset($_SESSION['user'])) {
-        header('Location: ' . BASE_URL . '/index.php');
+        header('Location: ' . BASE_URL . '/');
         exit;
     }
     if (!empty($roles) && !in_array($_SESSION['user']['role'], $roles, true)) {
