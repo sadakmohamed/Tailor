@@ -1,0 +1,23 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Disable directory listing (hides files when there is no index.php)
+    Options -Indexes
+    
+    # Remove .php extension from URLs
+    # 1) If the URL already ends with .php and the user typed it, redirect to the URL without .php
+    RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /([^\ ]+)\.php
+    RewriteRule ^/?(.*)\.php$ /$1 [L,R=301]
+
+    # 2) If the requested file is not a directory
+    RewriteCond %{REQUEST_FILENAME} !-d
+    # 3) And if the requested file with a .php extension actually exists
+    RewriteCond %{REQUEST_FILENAME}.php -f
+    # 4) Serve the .php file behind the scenes
+    RewriteRule ^(.*)$ $1.php [L]
+</IfModule>
+
+# Block external access to sensitive configuration and environment files
+<FilesMatch "^\.env|^\.git|^\.htaccess|README\.md|composer\.json">
+    Require all denied
+</FilesMatch>
