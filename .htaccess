@@ -4,9 +4,10 @@
     # Disable directory listing (hides files when there is no index.php)
     Options -Indexes
     
-    # Remove .php extension from URLs
-    # 1) If the URL already ends with .php and the user typed it, redirect to the URL without .php
+    # Remove .php extension from URLs (GET requests only!)
+    # We ignore POST requests so form submissions (like Login) don't lose their data
     RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /([^\ ]+)\.php
+    RewriteCond %{REQUEST_METHOD} !POST
     RewriteRule ^/?(.*)\.php$ /$1 [L,R=301]
 
     # 2) If the requested file is not a directory
