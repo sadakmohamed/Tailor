@@ -27,10 +27,19 @@ if (file_exists($envPath)) {
 }
 
 // ── Database credentials ────────────────────────────────────
-define('DB_HOST', $_ENV['DB_HOST']);
-define('DB_USER', $_ENV['DB_USERNAME']);
-define('DB_PASS', $_ENV['DB_PASSWORD']);
-define('DB_NAME', $_ENV['DB_DATABASE']);
+$dbHost = $_ENV['DB_HOST'] ?? $_SERVER['DB_HOST'] ?? '';
+$dbUser = $_ENV['DB_USERNAME'] ?? $_SERVER['DB_USERNAME'] ?? '';
+$dbPass = $_ENV['DB_PASSWORD'] ?? $_SERVER['DB_PASSWORD'] ?? '';
+$dbName = $_ENV['DB_DATABASE'] ?? $_SERVER['DB_DATABASE'] ?? '';
+
+if (empty($dbHost) || empty($dbUser) || empty($dbName)) {
+    die("Error: Database credentials are missing. Please check your .env file on the server and ensure DB_HOST, DB_USERNAME, DB_PASSWORD, and DB_DATABASE are filled out.");
+}
+
+define('DB_HOST', $dbHost);
+define('DB_USER', $dbUser);
+define('DB_PASS', $dbPass);
+define('DB_NAME', $dbName);
 
 // ── App settings ────────────────────────────────────────────
 define('APP_NAME', $_ENV['APP_NAME'] ?? 'TailorPro');
