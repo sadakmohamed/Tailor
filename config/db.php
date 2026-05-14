@@ -4,15 +4,37 @@
  * Edit DB_USER / DB_PASS / DB_NAME to match your MySQL setup.
  */
 
+// ── Load .env file without Composer ─────────────────────────
+$envPath = dirname(__DIR__) . '/.env';
+if (file_exists($envPath)) {
+    $lines = file($envPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    foreach ($lines as $line) {
+        $line = trim($line);
+        if ($line === '' || strpos($line, '#') === 0) {
+            continue;
+        }
+        if (strpos($line, '=') !== false) {
+            list($name, $value) = explode('=', $line, 2);
+            $name = trim($name);
+            $value = trim($value, " \t\n\r\0\x0B\"'");
+            
+            $_ENV[$name] = $value;
+            $_SERVER[$name] = $value;
+        }
+    }
+} else {
+    die("Error: .env file not found. Please create one.");
+}
+
 // ── Database credentials ────────────────────────────────────
-define('DB_HOST', 'localhost');
-define('DB_USER', 'root');          // Change to your MySQL username
-define('DB_PASS', '');              // Change to your MySQL password
-define('DB_NAME', 'tailor_db');
+define('DB_HOST', $_ENV['DB_HOST']);
+define('DB_USER', $_ENV['DB_USERNAME']);
+define('DB_PASS', $_ENV['DB_PASSWORD']);
+define('DB_NAME', $_ENV['DB_DATABASE']);
 
 // ── App settings ────────────────────────────────────────────
-define('APP_NAME', 'TailorPro');
-define('CURRENCY', '$');
+define('APP_NAME', $_ENV['APP_NAME'] ?? 'TailorPro');
+define('CURRENCY', $_ENV['CURRENCY'] ?? '$');
 
 // ── Auto-detect project root paths ──────────────────────────
 // ROOT_PATH = absolute filesystem path to project root
